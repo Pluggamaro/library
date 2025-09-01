@@ -181,7 +181,7 @@ public class LibraryAccess {
                         conn.close();
                     }
                 }catch(SQLException exe){
-                    //
+                    System.err.println("Connection NOT closed! ");
                 }
             }
         }
