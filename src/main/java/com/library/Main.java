@@ -19,6 +19,8 @@ public class Main {
             switch(choice){
                 case 1: viewBooks(); break;
                 case 2: addBook(); break;
+                case 3: borrowBook(); break;
+
             }
         }
         
@@ -61,6 +63,10 @@ public class Main {
         
         dataAccess.addBook(title, author);
 
+    }
+
+    private static void borrowBook(){
+        
     }
 
 }
