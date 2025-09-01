@@ -1,10 +1,12 @@
 package com.library;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,10 +83,41 @@ public class LibraryAccess {
         try{
             conn = DatabaseManager.getConnection();
             conn.setAutoCommit(false);
-
+            //checking availability
             try(PreparedStatement checkStmnt = conn.prepareStatement(availabilityCheck)){
                 checkStmnt.setInt(1, bookId);
                 ResultSet rs = checkStmnt.executeQuery();
+                if(!rs.next() || !rs.getBoolean("is_available")){
+                    //throwing exeption
+                    throw new SQLException("Not available for borrowing!");
+                }
+            }
+            
+            //updating availability
+            try(PreparedStatement updtStmnt = conn.prepareStatement(bookUpdate)){
+                updtStmnt.setInt(1, bookId);
+                updtStmnt.executeUpdate();
+            }
+
+            try(PreparedStatement insrtStmnt = conn.prepareStatement(insertIntoTransactions)){
+                insrtStmnt.setInt(1, bookId);
+                insrtStmnt.setInt(2, userId);
+                insrtStmnt.setDate(3, Date.valueOf(LocalDate.now()));
+                insrtStmnt.executeUpdate();
+            }
+
+            //upon success, then commiting manually to transaction
+            conn.commit();
+            System.out.println("Book borrowed successfully!");
+        }catch(SQLException e){
+            System.err.println("Failed! "+ e.getMessage());
+            //rolling back changes to avoid false or partial updates
+            try{
+                if(conn != null){
+                    conn.rollback();
+                }
+            }catch(SQLException ex){
+                System.err.println("Error rolling back " + ex.getMessage());
             }
         }
     }
