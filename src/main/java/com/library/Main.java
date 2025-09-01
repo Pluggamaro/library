@@ -66,7 +66,12 @@ public class Main {
     }
 
     private static void borrowBook(){
-        
+        System.out.print("Enter your USER ID: ");
+        int userId = Integer.parseInt(scanner.nextLine());
+        System.out.print("Now, enter BOOK ID: ");
+        int bookId = Integer.parseInt(scanner.nextLine());
+
+        dataAccess.borrowBook(bookId, userId);
     }
 
 }
