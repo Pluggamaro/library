@@ -1,7 +1,39 @@
 package com.library;
 
+import java.util.Scanner;
+
 public class Main {
+
+    private static LibraryAccess dataAccess = new LibraryAccess();
+    private static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+
+        //loop control variable
+        boolean stop = false;
+
+        while(!stop){
+            printMenu();
+            int choice = getChoice();
+        }
+        
     }
+
+    private void printMenu(){
+        System.out.println("========Library Management System========");
+        System.out.println("           1. View Books                 ");
+        System.out.println("           2. Add Book                   ");
+        System.out.println("           3. Borrow                     ");
+        System.out.println("           4. Return                     ");
+        System.out.println("           5. EXIT                       ");
+        System.out.print("Make a choice 1-6");
+    }
+
+    private int getChoice(){
+        try{
+            return Integer.parseInt(scanner.nextLine());
+        }catch(NumberFormatException e){
+            return -1;
+        }
+    }
+
 }
