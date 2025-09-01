@@ -18,6 +18,7 @@ public class Main {
 
             switch(choice){
                 case 1: viewBooks(); break;
+                case 2: addBook(); break;
             }
         }
         
@@ -50,6 +51,16 @@ public class Main {
             System.out.println("==== BOOKS FOUND ====");
             books.forEach(System.out::println);
         }
+    }
+
+    private static void addBook(){
+        System.out.print("Enter TITLE: ");
+        String title = scanner.nextLine();
+        System.out.print("Enter Book AUTHOR: ");
+        String author = scanner.nextLine();
+        
+        dataAccess.addBook(title, author);
+
     }
 
 }
