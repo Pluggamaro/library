@@ -23,7 +23,7 @@ public class Main {
                 case 4: returnBook(); break;
                 case 5: System.out.println("Exiting Library...");
                         stop = true;scanner.close(); break;
-                
+                default: System.out.println("Invalid Choice!");
             }
         }
         
@@ -36,7 +36,7 @@ public class Main {
         System.out.println("           3. Borrow                     ");
         System.out.println("           4. Return                     ");
         System.out.println("           5. EXIT                       ");
-        System.out.print("Make a choice 1-6");
+        System.out.print(          "Make a choice (1-5) :");
     }
 
     private static int getChoice(){
