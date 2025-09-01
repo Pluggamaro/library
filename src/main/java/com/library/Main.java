@@ -14,11 +14,15 @@ public class Main {
         while(!stop){
             printMenu();
             int choice = getChoice();
+
+            switch(choice){
+                case 1: viewBooks(); break;
+            }
         }
         
     }
 
-    private void printMenu(){
+    private static void printMenu(){
         System.out.println("========Library Management System========");
         System.out.println("           1. View Books                 ");
         System.out.println("           2. Add Book                   ");
@@ -28,12 +32,16 @@ public class Main {
         System.out.print("Make a choice 1-6");
     }
 
-    private int getChoice(){
+    private static int getChoice(){
         try{
             return Integer.parseInt(scanner.nextLine());
         }catch(NumberFormatException e){
             return -1;
         }
+    }
+
+    private static void viewBooks(){
+        
     }
 
 }
