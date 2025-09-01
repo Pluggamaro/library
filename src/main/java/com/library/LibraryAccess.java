@@ -131,6 +131,11 @@ public class LibraryAccess {
         }
     }
 
-    
+    //return book resets is_available to true and sets return date on transactions
+
+    public void bookReturn(int bookId, int userId){
+        String updateTrans = "UPDATE transactions SET return_date = ? WHERE book_id = ? AND user_id = ? AND return_date IS NULL";
+        
+    }
 
 }
