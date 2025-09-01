@@ -119,7 +119,18 @@ public class LibraryAccess {
             }catch(SQLException ex){
                 System.err.println("Error rolling back " + ex.getMessage());
             }
+        }finally {
+            try{
+                if(conn != null){
+                    conn.setAutoCommit(true);
+                    conn.close();
+                }
+            }catch(SQLException e){
+                System.err.println("Connection NOT closed! " + e.getMessage());
+            }
         }
     }
+
+    
 
 }
