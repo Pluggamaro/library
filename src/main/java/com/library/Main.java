@@ -21,8 +21,9 @@ public class Main {
                 case 2: addBook(); break;
                 case 3: borrowBook(); break;
                 case 4: returnBook(); break;
-
-
+                case 5: System.out.println("Exiting Library...");
+                        stop = true;scanner.close(); break;
+                
             }
         }
         
