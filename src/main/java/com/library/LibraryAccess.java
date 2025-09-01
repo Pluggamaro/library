@@ -64,10 +64,29 @@ public class LibraryAccess {
             return books;
     }
 
-    
+    /*
+     *borrow book uses a query that checks the availability column
+     *using a unique id. Upon success, all that is put into the 
+     *transactions table.   
+     */    
 
     public void borrowBook(int bookId, int userId){
-        String 
+        String availabilityCheck = "SELECT is_available FROM books WHERE book_id = ?";
+        //if found, set to false for availability
+        String bookUpdate = "UPDATE books SET is_available = FALSE WHERE book_id = ?";
+        String insertIntoTransactions = "INSERT INTO transactions(book_id, user_id, borrow_date) VALUE(?,?,?)";
+
+        Connection conn = null;
+
+        try{
+            conn = DatabaseManager.getConnection();
+            conn.setAutoCommit(false);
+
+            try(PreparedStatement checkStmnt = conn.prepareStatement(availabilityCheck)){
+                checkStmnt.setInt(1, bookId);
+                ResultSet rs = checkStmnt.executeQuery();
+            }
+        }
     }
 
 }
