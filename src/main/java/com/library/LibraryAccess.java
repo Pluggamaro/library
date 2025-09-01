@@ -50,11 +50,24 @@ public class LibraryAccess {
             Statement prepStmnt = conn.createStatement();
             ResultSet rs = prepStmnt.executeQuery(sql)) {
                 //iterating over result set and appending books
-                
+                while(rs.next()){
+                    books.add(new Book(
+                        rs.getInt("book_id"),
+                        rs.getString("title"),
+                        rs.getString("author"),
+                        rs.getBoolean("is_available")
+                        ));
+                }
             }catch(SQLException e){
                 System.err.println("Error! "+e.getMessage());
             }
+            return books;
+    }
 
+    
+
+    public void borrowBook(int bookId, int userId){
+        String 
     }
 
 }
