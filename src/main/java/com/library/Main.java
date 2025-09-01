@@ -20,6 +20,8 @@ public class Main {
                 case 1: viewBooks(); break;
                 case 2: addBook(); break;
                 case 3: borrowBook(); break;
+                case 4: returnBook(); break;
+
 
             }
         }
@@ -72,6 +74,15 @@ public class Main {
         int bookId = Integer.parseInt(scanner.nextLine());
 
         dataAccess.borrowBook(bookId, userId);
+    }
+
+    private static void returnBook(){
+        System.out.print("Enter your User ID: ");
+        int userId = Integer.parseInt(scanner.nextLine());
+        System.out.print("Enter ID of Book You Are Returning: ");
+        int bookId = Integer.parseInt(scanner.nextLine());
+
+        dataAccess.bookReturn(bookId, userId);
     }
 
 }
