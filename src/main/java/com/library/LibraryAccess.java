@@ -135,7 +135,56 @@ public class LibraryAccess {
 
     public void bookReturn(int bookId, int userId){
         String updateTrans = "UPDATE transactions SET return_date = ? WHERE book_id = ? AND user_id = ? AND return_date IS NULL";
+        String updateBook = "UPDATE books SET is_available = TRUE WHERE book_id = ?";
+        Connection conn = null;
         
+        try{
+            conn = DatabaseManager.getConnection();
+            conn.setAutoCommit(false);
+
+            //defining variable to track success of query
+            int rowsAffected;
+
+            try(PreparedStatement updateTransStmnt = conn.prepareStatement(updateTrans)){
+                updateTransStmnt.setDate(1, Date.valueOf(LocalDate.now()));
+                updateTransStmnt.setInt(2, bookId);
+                updateTransStmnt.setInt(3, userId);
+                rowsAffected = updateTransStmnt.executeUpdate();
+
+            }
+
+            if(rowsAffected == 0){
+                throw new SQLException("No record found!");
+            }
+
+            try(PreparedStatement bookUpdtStmnt = conn.prepareStatement(updateBook)){
+                bookUpdtStmnt.setInt(1, bookId);
+                bookUpdtStmnt.executeUpdate();
+            }
+
+            conn.commit();
+            System.out.println("Success! Book Returned!");
+
+        }catch(SQLException e){
+            System.err.println("Failed " + e.getMessage());
+            try{
+                if(conn != null){
+                    conn.rollback();
+
+                }
+            }catch(SQLException ex){
+                System.err.println("Error rolling back: " + ex.getMessage());
+            }finally{
+                try{
+                    if(conn != null){
+                        conn.setAutoCommit(true);
+                        conn.close();
+                    }
+                }catch(SQLException exe){
+                    //
+                }
+            }
+        }
     }
 
 }
