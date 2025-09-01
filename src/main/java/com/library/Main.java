@@ -1,5 +1,6 @@
 package com.library;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -41,7 +42,14 @@ public class Main {
     }
 
     private static void viewBooks(){
-        
+        List<Book> books = dataAccess.getAvailableBooks();
+
+        if(books.isEmpty()){
+            System.err.println("NO BOOKS FOUND!");
+        }else{
+            System.out.println("==== BOOKS FOUND ====");
+            books.forEach(System.out::println);
+        }
     }
 
 }
