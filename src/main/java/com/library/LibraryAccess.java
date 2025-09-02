@@ -43,7 +43,7 @@ public class LibraryAccess {
          */
 
         List<Book> books = new ArrayList<>();
-        String sql = "SELECT * FROM books WHERE is_available = TRUE ORDER BY title";
+        String sql = "SELECT * FROM books ORDER BY title";
 
         /*using createStatement instead of prepStatement considering
          *that there will not be concurrent/heavy requests 
@@ -76,7 +76,7 @@ public class LibraryAccess {
         String availabilityCheck = "SELECT is_available FROM books WHERE book_id = ?";
         //if found, set to false for availability
         String bookUpdate = "UPDATE books SET is_available = FALSE WHERE book_id = ?";
-        String insertIntoTransactions = "INSERT INTO transactions(book_id, user_id, borrow_date) VALUE(?,?,?)";
+        String insertIntoTransactions = "INSERT INTO transactions(book_id, user_id, borrow_date) VALUES(?,?,?)";
 
         Connection conn = null;
 
